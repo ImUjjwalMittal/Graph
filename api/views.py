@@ -13,26 +13,17 @@ from .serializers import InteractiveSerializer
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from django.http import FileResponse
-import sweetviz
-from pandas_profiling import ProfileReport
 import plotly
 import plotly.express as px
 
 import math
-import numpy as np 
 import pandas as pd
 import yfinance as yf
 from plotly.offline import plot 
-import seaborn as sns
 import plotly.graph_objs as go
 import matplotlib.pyplot as plt
-from keras.models import Sequential
-from keras.layers import LSTM, Dense
 import matplotlib  
 matplotlib.use('Agg')
-import io
-import urllib, base64
 
 
 
@@ -43,8 +34,9 @@ class InteractiveGraphAPIView(APIView):
 
 
     def post(self , request , format = None):
-    
         input_stock_ticker = request.data.get('companycode')
+
+    
         data_stocks = yf.Ticker(input_stock_ticker)
         data_fetch = data_stocks.history(period='1d', interval='1m')
         raw_data = pd.DataFrame(data=data_fetch)
